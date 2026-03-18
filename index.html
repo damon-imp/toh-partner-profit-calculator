@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TOH Partner Income Calculator</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap');
+  :root{--bg:#1A1A1A;--card:#222;--input:#181818;--bdr:#333;--accent:#C45BFF;--glow:rgba(196,91,255,.15);--glow2:rgba(196,91,255,.3);--white:#fff;--t2:#999;--t3:#666}
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--white);min-height:100vh}
+  .c{max-width:940px;margin:0 auto;padding:48px 24px 64px}
+  .hdr{text-align:center;margin-bottom:56px}
+  .logo{display:flex;align-items:center;justify-content:center;gap:16px;margin-bottom:20px}
+  .logo-m{font-weight:900;font-size:48px;color:var(--accent);line-height:1;letter-spacing:-2px}
+  .logo-t .sm{font-weight:400;font-size:14px;letter-spacing:2px;text-transform:uppercase}
+  .logo-t .lg{font-weight:800;font-size:28px;letter-spacing:-.5px}
+  .div{width:60px;height:3px;background:var(--accent);margin:20px auto 16px;border-radius:2px}
+  .hdr h2{font-weight:600;font-size:22px;letter-spacing:3px;text-transform:uppercase;margin-bottom:8px}
+  .hdr p{color:var(--t2);font-size:15px;font-weight:300}
+  .g{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:28px}
+  @media(max-width:700px){.g,.rg{grid-template-columns:1fr!important}}
+  .cd{background:var(--card);border:1px solid var(--bdr);border-radius:14px;padding:28px;transition:border-color .3s}
+  .cd:hover{border-color:#444}
+  .cl{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:2px;color:var(--accent);margin-bottom:20px}
+  .ig{margin-bottom:18px}.ig:last-child{margin-bottom:0}
+  .ig label{display:block;font-size:13px;font-weight:500;color:var(--t2);margin-bottom:6px}
+  .ig input,.ig select{width:100%;background:var(--input);border:1px solid var(--bdr);border-radius:10px;padding:12px 16px;color:var(--white);font-family:'JetBrains Mono',monospace;font-size:15px;outline:none;transition:border-color .25s,box-shadow .25s;-webkit-appearance:none}
+  .ig select{font-family:'Outfit',sans-serif;font-size:14px;cursor:pointer;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23999' stroke-width='1.5' fill='none'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 16px center;padding-right:40px}
+  .ig input:focus,.ig select:focus{border-color:var(--accent);box-shadow:0 0 0 3px var(--glow)}
+  .ig select option{background:var(--card);color:var(--white)}
+  .sv{font-family:'JetBrains Mono',monospace;font-size:36px;font-weight:700;text-align:center;margin-bottom:4px}
+  .sv span{color:var(--accent)}
+  .sc{margin-top:6px}
+  .sc input[type=range]{-webkit-appearance:none;width:100%;height:6px;background:var(--bdr);border-radius:3px;outline:none;border:none;padding:0;cursor:pointer}
+  .sc input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:22px;height:22px;background:var(--accent);border-radius:50%;cursor:pointer;box-shadow:0 0 12px var(--glow2);transition:transform .15s}
+  .sc input[type=range]::-webkit-slider-thumb:hover{transform:scale(1.15)}
+  .sc input[type=range]::-moz-range-thumb{width:22px;height:22px;background:var(--accent);border-radius:50%;border:none;box-shadow:0 0 12px var(--glow2)}
+  .rg{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:28px}
+  .rc{background:var(--card);border:1px solid var(--bdr);border-radius:14px;padding:24px 20px;text-align:center;transition:border-color .3s,transform .2s}
+  .rc:hover{transform:translateY(-2px)}
+  .rc.hi{border-color:var(--accent);background:linear-gradient(160deg,rgba(196,91,255,.08) 0%,var(--card) 100%);box-shadow:0 4px 24px var(--glow)}
+  .rl{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:2px;color:var(--t3);margin-bottom:10px}
+  .rv{font-family:'JetBrains Mono',monospace;font-size:30px;font-weight:700;line-height:1.1}
+  .rc.hi .rv{color:var(--accent)}
+  .rs{font-size:13px;color:var(--t3);margin-top:6px;font-weight:400}
+  .tb{display:inline-block;padding:3px 10px;border-radius:20px;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1px}
+  .te{background:var(--bdr);color:var(--t2)}.tv{background:var(--accent);color:#fff}
+  .bd{background:var(--card);border:1px solid var(--bdr);border-radius:14px;padding:28px;margin-bottom:28px}
+  .bd h3{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:2px;color:var(--accent);margin-bottom:20px}
+  .br{display:flex;justify-content:space-between;align-items:center;padding:14px 0;border-bottom:1px solid #2a2a2a}
+  .br:last-child{border-bottom:none}
+  .br .l{color:var(--t2);font-size:14px}.br .v{font-family:'JetBrains Mono',monospace;font-size:14px}
+  .br.tot{border-top:2px solid var(--accent);border-bottom:none;padding-top:18px;margin-top:8px}
+  .br.tot .l{color:var(--accent);font-weight:700;font-size:15px}
+  .br.tot .v{color:var(--accent);font-weight:700;font-size:20px}
+  .ab{text-align:center;padding:40px 32px;background:linear-gradient(160deg,rgba(196,91,255,.12) 0%,var(--card) 50%,rgba(196,91,255,.06) 100%);border:1px solid var(--accent);border-radius:14px;position:relative;overflow:hidden}
+  .ab::before{content:'';position:absolute;top:-50%;left:-50%;width:200%;height:200%;background:radial-gradient(circle at 30% 30%,var(--glow) 0%,transparent 50%);pointer-events:none}
+  .ab .al{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:3px;color:var(--accent);margin-bottom:12px;position:relative}
+  .ab .av{font-family:'JetBrains Mono',monospace;font-size:52px;font-weight:700;color:var(--accent);position:relative;text-shadow:0 0 40px var(--glow2)}
+  .ab .as{color:var(--t3);font-size:13px;margin-top:10px;font-weight:300;position:relative}
+  .ft{text-align:center;margin-top:48px;padding-top:24px;border-top:1px solid var(--bdr)}
+  .ft p{font-size:12px;color:var(--t3);font-weight:300}
+  .ft a{color:var(--accent);text-decoration:none}
+</style>
+</head>
+<body>
+<div class="c">
+  <div class="hdr">
+    <div class="logo"><div class="logo-m">OH</div><div class="logo-t"><div class="sm">THE</div><div class="lg">Optimized Human</div></div></div>
+    <div class="div"></div>
+    <h2>Partner Income Calculator</h2>
+    <p>See exactly what you'll earn reselling TOH products at market prices.</p>
+  </div>
+  <div class="g">
+    <div class="cd">
+      <div class="cl">Product Selection</div>
+      <div class="ig"><label>Category</label><select id="cat" onchange="upd()"><option value="weight_loss">Metabolic / Weight Loss</option><option value="gh_recovery">Growth Hormone / Recovery</option><option value="healing">Healing / Anti-Inflammatory</option><option value="cognitive">Cognitive / Neuro / Sleep</option><option value="longevity">Longevity / Mito / Cellular</option><option value="hormonal">Hormonal / Vitamins</option><option value="aesthetic">Aesthetic / Cosmetic</option></select></div>
+      <div class="ig"><label>Product</label><select id="prod" onchange="chg()"></select></div>
+      <div class="ig"><label>Your selling price ($)</label><input type="number" id="sp" value="0" min="0" step="0.01" oninput="calc()"></div>
+    </div>
+    <div class="cd">
+      <div class="cl">Volume & Tier</div>
+      <div class="ig"><label>Units sold per week</label><div class="sv"><span id="ud">5</span></div><div class="sc"><input type="range" id="un" min="1" max="100" value="5" oninput="calc()"></div></div>
+      <div class="ig"><label>Partner tier</label><select id="ti" onchange="calc()"><option value="entry">Entry Partner (50% margin share)</option><option value="volume">Volume Partner (65% margin share)</option></select></div>
+    </div>
+  </div>
+  <div class="rg">
+    <div class="rc"><div class="rl">Your Cost / Unit</div><div class="rv" id="cpu">$0</div><div class="rs" id="tbg"></div></div>
+    <div class="rc"><div class="rl">Profit / Unit</div><div class="rv" id="ppu">$0</div><div class="rs" id="mp">0% margin</div></div>
+    <div class="rc hi"><div class="rl">Monthly Income</div><div class="rv" id="mi">$0</div><div class="rs" id="wi">$0/week</div></div>
+  </div>
+  <div class="bd">
+    <h3>Monthly Breakdown</h3>
+    <div class="br"><span class="l">Units sold (monthly)</span><span class="v" id="bmu">0</span></div>
+    <div class="br"><span class="l">Gross revenue</span><span class="v" id="brv">$0</span></div>
+    <div class="br"><span class="l">Cost of goods</span><span class="v" id="bcg">$0</span></div>
+    <div class="br tot"><span class="l">NET PROFIT</span><span class="v" id="bpr">$0</span></div>
+  </div>
+  <div class="ab">
+    <div class="al">Projected Annual Income</div>
+    <div class="av" id="ai">$0</div>
+    <div class="as">Based on current weekly volume, selling at your set price</div>
+  </div>
+  <div class="ft"><p>The Optimized Human &middot; Partner Program &middot; <a href="#">theoptimizedhuman.com</a></p></div>
+</div>
+<script>
+const P={weight_loss:[{n:"GLP-3R 60mg",c:117.5,o:419.99,t:535},{n:"GLP-3R 50mg",c:99.5,o:359.99,t:455},{n:"GLP-3R 30mg",c:69.5,o:239.99,t:300},{n:"GLP-3R 20mg",c:52.5,o:169.99,t:215},{n:"GLP-3R 10mg",c:29.25,o:89.99,t:120},{n:"GLP-1S 30mg",c:49.5,o:199.99,t:260},{n:"GLP-1S 20mg",c:34.5,o:139.99,t:180},{n:"GLP-1S 10mg",c:27.5,o:74.99,t:102.5},{n:"GLP-1S 5mg",c:19.5,o:44.99,t:60},{n:"GLP-2T 60mg",c:74.5,o:359.99,t:440},{n:"GLP-2T 40mg",c:64.5,o:239.99,t:295},{n:"GLP-2T 30mg",c:54.25,o:179.99,t:225},{n:"GLP-2T 20mg",c:44.5,o:129.99,t:165},{n:"GLP-2T 10mg",c:24.5,o:69.99,t:95},{n:"Cagrilintide 10mg",c:49.5,o:149.99,t:185},{n:"Cagrilintide 5mg",c:29.5,o:89.99,t:115},{n:"Lipo C 216mg",c:34.5,o:96.99,t:96.99},{n:"Lemon Bottle 10ml",c:19.5,o:89.99,t:120}],gh_recovery:[{n:"Tesamorelin 10mg",c:34.98,o:219.99,t:285},{n:"Tesamorelin 5mg",c:22.5,o:139.99,t:180},{n:"Ipamorelin 10mg",c:21,o:59.99,t:80},{n:"CJC-1295 + Ipa 5/5mg",c:27.5,o:77.99,t:77.99},{n:"CJC-1295 (No DAC) 10mg",c:24.5,o:74.99,t:97.5},{n:"IGF-LR3 1mg",c:45,o:84.99,t:112.5},{n:"Tesamorelin/Ipa 10/3mg",c:49.5,o:138.99,t:138.99},{n:"Sermorelin 10mg",c:29.5,o:64.99,t:87.5},{n:"AOD-9604 5mg",c:24.5,o:44.99,t:60},{n:"PEG-MGF 2mg",c:19.5,o:54.99,t:72.5},{n:"Fragment 176-191 5mg",c:24.98,o:44.99,t:57.5}],healing:[{n:"BPC-157 10mg",c:19.98,o:64.99,t:87.5},{n:"BPC-157 5mg",c:14.5,o:34.99,t:47.5},{n:"TB-500 10mg",c:24.5,o:79.99,t:110},{n:"TB-500 5mg",c:14.5,o:44.99,t:62.5},{n:"LL-37 5mg",c:22.5,o:119.99,t:150},{n:"BPC-157 + TB-500 20mg",c:44.5,o:124.99,t:124.99},{n:"ARA-290 50mg",c:89.5,o:319.99,t:400},{n:"ARA-290 10mg",c:29.5,o:94.99,t:122.5}],cognitive:[{n:"Semax 10mg",c:16.45,o:44.99,t:60},{n:"Selank 10mg",c:17.33,o:69.99,t:90},{n:"DSIP 10mg",c:22.5,o:59.99,t:80},{n:"DSIP 15mg",c:32.5,o:84.99,t:107.5},{n:"Pinealon 10mg",c:22.5,o:64.99,t:82.5},{n:"N-Acetyl Selank 10mg",c:24.98,o:79.99,t:100},{n:"Methylene Blue 60ml",c:12,o:33.99,t:33.99}],longevity:[{n:"5-Amino-1MQ 50mg",c:57.5,o:649.99,t:800},{n:"5-Amino-1MQ 10mg",c:34.5,o:169.99,t:215},{n:"SS-31 50mg",c:69.5,o:379.99,t:465},{n:"MOTS-c 40mg",c:57.5,o:259.99,t:320},{n:"MOTS-c 10mg",c:19,o:84.99,t:112.5},{n:"NAD+ 1000mg",c:42.5,o:159.99,t:210},{n:"NAD+ 500mg",c:22.5,o:89.99,t:120},{n:"FOXO4-DRI 10mg",c:34.5,o:159.99,t:210},{n:"SLU-PP-332 5mg",c:19.5,o:109.99,t:145},{n:"Epithalon 50mg",c:59.5,o:139.99,t:180}],hormonal:[{n:"LIPO-C + B12 10mg",c:39.5,o:110.99,t:110.99},{n:"PT-141 10mg",c:18.5,o:51.99,t:51.99},{n:"VIP 10mg",c:39.5,o:84.99,t:112.5},{n:"Thymosin Alpha-1 5mg",c:21,o:58.99,t:58.99},{n:"Glutathione 750mg",c:24.5,o:44.99,t:60},{n:"KSPTN 10mg",c:19.5,o:44.99,t:60}],aesthetic:[{n:"GHK-Cu 100mg",c:22.5,o:94.99,t:122.5},{n:"GHK-Cu 50mg",c:14.5,o:54.99,t:72.5},{n:"Snap-8 10mg",c:19.5,o:54.99,t:72.5},{n:"GLOW 70mg",c:44.5,o:124.99,t:124.99},{n:"PDRN Collagen",c:22.5,o:62.99,t:62.99},{n:"GHK-Cu Compound",c:22.5,o:62.99,t:62.99},{n:"AHK-Cu 50mg",c:31.5,o:56.99,t:60}]};
+function f(n){return'$'+n.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g,',')}
+function upd(){const s=document.getElementById('cat').value,sel=document.getElementById('prod');sel.innerHTML='';P[s].forEach((p,i)=>{const o=document.createElement('option');o.value=i;o.textContent=p.n;sel.appendChild(o)});chg()}
+function chg(){const s=document.getElementById('cat').value,i=parseInt(document.getElementById('prod').value),p=P[s][i];document.getElementById('sp').value=p.t.toFixed(2);calc()}
+function calc(){const s=document.getElementById('cat').value,i=parseInt(document.getElementById('prod').value),p=P[s][i],t=document.getElementById('ti').value,u=parseInt(document.getElementById('un').value),sp=parseFloat(document.getElementById('sp').value)||0;document.getElementById('ud').textContent=u;const d=t==='volume'?.65:.5,m=p.o-p.c,pc=p.c+(m*d),pu=sp-pc,mp=sp>0?(pu/sp)*100:0,wp=pu*u,mu=u*4.33,mr=sp*mu,mc=pc*mu,mpr=pu*mu,ap=mpr*12;document.getElementById('cpu').textContent=f(pc);document.getElementById('tbg').innerHTML=t==='volume'?'<span class="tb tv">VOLUME TIER</span>':'<span class="tb te">ENTRY TIER</span>';document.getElementById('ppu').textContent=f(Math.max(pu,0));document.getElementById('mp').textContent=mp.toFixed(1)+'% margin';document.getElementById('mi').textContent=f(Math.max(mpr,0));document.getElementById('wi').textContent=f(Math.max(wp,0))+'/week';document.getElementById('bmu').textContent=Math.round(mu);document.getElementById('brv').textContent=f(mr);document.getElementById('bcg').textContent=f(mc);document.getElementById('bpr').textContent=f(Math.max(mpr,0));document.getElementById('ai').textContent=f(Math.max(ap,0))}
+upd();
+</script>
+</body>
+</html>
